@@ -8,27 +8,28 @@ function App() {
   const sneakerRef = useRef(null);
   const purchaseRef = useRef(null);
   const allHalfSecondEase = `all 0.5s ease`;
-  const container = containerRef.current;
-  const card = cardRef.current;
-  const title = titleRef.current;
-  const sneaker = sneakerRef.current;
-  const purchase = purchaseRef.current;
 
   useLayoutEffect(() => {
+    const container = containerRef.current;
+    const card = cardRef.current;
+
     const skewCard = (e) => {
       let xAxis = (window.innerWidth / 2 - e.pageX) / 25;
       let yAxis = (window.innerWidth / 2 - e.pageY) / 25;
-      cardRef.current.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+      card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
     };
 
     container.addEventListener('mousemove', skewCard);
     return () => {
       container.removeEventListener('mousemove', skewCard);
     };
-  }, [container]);
+  }, []);
 
   useLayoutEffect(() => {
     const easeInCard = () => {
+      const title = titleRef.current;
+      const sneaker = sneakerRef.current;
+      const purchase = purchaseRef.current;
       cardRef.current.style.transition = allHalfSecondEase;
       title.style.transition = allHalfSecondEase;
       sneaker.style.transition = allHalfSecondEase;
@@ -38,20 +39,19 @@ function App() {
       sneaker.style.transform = `translateZ(100px)`;
     };
 
+    const container = containerRef.current;
     container.addEventListener('mouseenter', easeInCard);
     return () => {
       container.removeEventListener('mouseenter', easeInCard);
     };
-  }, [
-    allHalfSecondEase,
-    container,
-    purchase.style,
-    sneaker.style,
-    title.style,
-  ]);
+  }, [allHalfSecondEase]);
 
   useLayoutEffect(() => {
     const easeOutCard = () => {
+      const card = cardRef.current;
+      const title = titleRef.current;
+      const sneaker = sneakerRef.current;
+      const purchase = purchaseRef.current;
       card.style.transition = allHalfSecondEase;
       title.style.transition = allHalfSecondEase;
       sneaker.style.transition = allHalfSecondEase;
@@ -62,18 +62,12 @@ function App() {
       purchase.style.transform = `translateZ(0px)`;
     };
 
+    const container = containerRef.current;
     container.addEventListener('mouseleave', easeOutCard);
     return () => {
       container.removeEventListener('mouseleave', easeOutCard);
     };
-  }, [
-    allHalfSecondEase,
-    container,
-    sneaker.style,
-    purchase.style,
-    card.style,
-    title.style,
-  ]);
+  }, [allHalfSecondEase]);
 
   return (
     <div className="container" ref={containerRef}>
